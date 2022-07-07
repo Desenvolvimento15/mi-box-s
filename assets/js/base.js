@@ -1239,11 +1239,11 @@
         }
 
         function ajaxHandleResponses(s, jqXHR, responses) {
-            for (var ct, type, finalDataType, firstDataType, contents = s.contents, dataTypes = s.dataTypes;
+            for (var ct, type, finalDataType, firstDataType, conteudo = s.conteudo, dataTypes = s.dataTypes;
                 "*" === dataTypes[0];) dataTypes.shift(), void 0 === ct && (ct = s.mimeType || jqXHR.getResponseHeader("Content-Type"));
             if (ct)
-                for (type in contents)
-                    if (contents[type] && contents[type].test(ct)) {
+                for (type in conteudo)
+                    if (conteudo[type] && conteudo[type].test(ct)) {
                         dataTypes.unshift(type);
                         break
                     } if (dataTypes[0] in responses) finalDataType = dataTypes[0];
@@ -2200,7 +2200,7 @@
         var rparentsprev = /^(?:parents|prev(?:Until|All))/,
             guaranteedUnique = {
                 children: !0,
-                contents: !0,
+                conteudo: !0,
                 next: !0,
                 prev: !0
             };
@@ -2270,7 +2270,7 @@
             children: function (elem) {
                 return siblings(elem.firstChild)
             },
-            contents: function (elem) {
+            conteudo: function (elem) {
                 return nodeName(elem, "iframe") ? elem.contentDocument : (nodeName(elem, "template") && (elem = elem.content || elem), jQuery.merge([], elem.childNodes))
             }
         }, function (name, fn) {
@@ -2970,14 +2970,14 @@
         ! function () {
             function computeStyleTests() {
                 if (div) {
-                    div.style.cssText = "box-sizing:border-box;position:relative;display:block;margin:auto;border:1px;padding:1px;top:1%;width:50%", div.innerHTML = "", documentElement.appendChild(container);
+                    div.style.cssText = "box-sizing:border-box;position:relative;display:block;margin:auto;border:1px;padding:1px;top:1%;width:50%", div.innerHTML = "", documentElement.appendChild(box-container);
                     var divStyle = window.getComputedStyle(div);
-                    pixelPositionVal = "1%" !== divStyle.top, reliableMarginLeftVal = "2px" === divStyle.marginLeft, boxSizingReliableVal = "4px" === divStyle.width, div.style.marginRight = "50%", pixelMarginRightVal = "4px" === divStyle.marginRight, documentElement.removeChild(container), div = null
+                    pixelPositionVal = "1%" !== divStyle.top, reliableMarginLeftVal = "2px" === divStyle.marginLeft, boxSizingReliableVal = "4px" === divStyle.width, div.style.marginRight = "50%", pixelMarginRightVal = "4px" === divStyle.marginRight, documentElement.removeChild(box-container), div = null
                 }
             }
-            var pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal, container = document.createElement("div"),
+            var pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal, box-container = document.createElement("div"),
                 div = document.createElement("div");
-            div.style && (div.style.backgroundClip = "content-box", div.cloneNode(!0).style.backgroundClip = "", support.clearCloneStyle = "content-box" === div.style.backgroundClip, container.style.cssText = "border:0;width:8px;height:0;top:0;left:-9999px;padding:0;margin-top:1px;position:absolute", container.appendChild(div), jQuery.extend(support, {
+            div.style && (div.style.backgroundClip = "content-box", div.cloneNode(!0).style.backgroundClip = "", support.clearCloneStyle = "content-box" === div.style.backgroundClip, box-container.style.cssText = "border:0;width:8px;height:0;top:0;left:-9999px;padding:0;margin-top:1px;position:absolute", box-container.appendChild(div), jQuery.extend(support, {
                 pixelPosition: function () {
                     return computeStyleTests(), pixelPositionVal
                 },
@@ -3566,7 +3566,7 @@
                     xml: "application/xml, text/xml",
                     json: "application/json, text/javascript"
                 },
-                contents: {
+                conteudo: {
                     xml: /\bxml\b/,
                     html: /\bhtml/,
                     json: /\bjson\b/
@@ -3705,8 +3705,8 @@
                     jQuery(this).wrapInner(html.call(this, i))
                 }) : this.each(function () {
                     var self = jQuery(this),
-                        contents = self.contents();
-                    contents.length ? contents.wrapAll(html) : self.append(html)
+                        conteudo = self.conteudo();
+                    conteudo.length ? conteudo.wrapAll(html) : self.append(html)
                 })
             },
             wrap: function (html) {
@@ -3767,12 +3767,12 @@
                 }
             }
         }), jQuery.ajaxPrefilter(function (s) {
-            s.crossDomain && (s.contents.script = !1)
+            s.crossDomain && (s.conteudo.script = !1)
         }), jQuery.ajaxSetup({
             accepts: {
                 script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
             },
-            contents: {
+            conteudo: {
                 script: /\b(?:java|ecma)script\b/
             },
             converters: {
@@ -3809,13 +3809,13 @@
                 return this[callback] = !0, callback
             }
         }), jQuery.ajaxPrefilter("json jsonp", function (s, originalSettings, jqXHR) {
-            var callbackName, overwritten, responseContainer, jsonProp = !1 !== s.jsonp && (rjsonp.test(s.url) ? "url" : "string" == typeof s.data && 0 === (s.contentType || "").indexOf("application/x-www-form-urlencoded") && rjsonp.test(s.data) && "data");
+            var callbackName, overwritten, responsebox-container, jsonProp = !1 !== s.jsonp && (rjsonp.test(s.url) ? "url" : "string" == typeof s.data && 0 === (s.contentType || "").indexOf("application/x-www-form-urlencoded") && rjsonp.test(s.data) && "data");
             if (jsonProp || "jsonp" === s.dataTypes[0]) return callbackName = s.jsonpCallback = jQuery.isFunction(s.jsonpCallback) ? s.jsonpCallback() : s.jsonpCallback, jsonProp ? s[jsonProp] = s[jsonProp].replace(rjsonp, "$1" + callbackName) : !1 !== s.jsonp && (s.url += (rquery.test(s.url) ? "&" : "?") + s.jsonp + "=" + callbackName), s.converters["script json"] = function () {
-                return responseContainer || jQuery.error(callbackName + " was not called"), responseContainer[0]
+                return responsebox-container || jQuery.error(callbackName + " was not called"), responsebox-container[0]
             }, s.dataTypes[0] = "json", overwritten = window[callbackName], window[callbackName] = function () {
-                responseContainer = arguments
+                responsebox-container = arguments
             }, jqXHR.always(function () {
-                void 0 === overwritten ? jQuery(window).removeProp(callbackName) : window[callbackName] = overwritten, s[callbackName] && (s.jsonpCallback = originalSettings.jsonpCallback, oldCallbacks.push(callbackName)), responseContainer && jQuery.isFunction(overwritten) && overwritten(responseContainer[0]), responseContainer = overwritten = void 0
+                void 0 === overwritten ? jQuery(window).removeProp(callbackName) : window[callbackName] = overwritten, s[callbackName] && (s.jsonpCallback = originalSettings.jsonpCallback, oldCallbacks.push(callbackName)), responsebox-container && jQuery.isFunction(overwritten) && overwritten(responsebox-container[0]), responsebox-container = overwritten = void 0
             }), "script"
         }), support.createHTMLDocument = function () {
             var body = document.implementation.createHTMLDocument("").body;
@@ -4813,7 +4813,7 @@
 
         function renderSuggestList() {
             var searchVal = $(".J_searchText").val(),
-                listContainer = $(".search-list");
+                listbox-container = $(".search-list");
             "" != searchVal && searchVal.length >= 1 ? (searchVal = searchVal.replace(/[\-_'=+|\\\/]/g, " "), $.ajax({
                 type: "GET",
                 url: GLOBAL_CONFIG.goUrl + "/v2/search/suggestList",
@@ -4830,7 +4830,7 @@
                         var temp = doT.template($("#searchList").html()),
                             str = data.data.list ? temp(data.data.list) : null,
                             item = data.data.item || [];
-                        listContainer.empty(), listContainer.removeClass("hide"), item && (window._msq && item[0] && window._msq.push(["trackEvent", "search-search_page-direct_search_show", GLOBAL_CONFIG.wwwSite + "/" + item[0].tag, JSON.stringify({
+                        listbox-container.empty(), listbox-container.removeClass("hide"), item && (window._msq && item[0] && window._msq.push(["trackEvent", "search-search_page-direct_search_show", GLOBAL_CONFIG.wwwSite + "/" + item[0].tag, JSON.stringify({
                             p1: data.data.keyword,
                             p2: item[0].name,
                             p3: item[0].tag
@@ -4843,11 +4843,11 @@
                                     p1: data.data.keyword,
                                     p2: el.name,
                                     p3: el.tag
-                                })) + "])").appendTo(listContainer).attr("data-suggest", JSON.stringify(el));
+                                })) + "])").appendTo(listbox-container).attr("data-suggest", JSON.stringify(el));
                             el.image && "commodity" === el.item_type && $("<img/>").attr("src", el.image).attr("alt", "").appendTo(directItem);
                             var directInfo = $("<div/>").addClass("item-info").appendTo(directItem);
                             $("<div/>").addClass("item-title" + (isEventQuery ? " event-query" : "")).text(el.name).appendTo(directInfo), el.in_act && "commodity" === el.item_type && $("<strong/>").text(Xiaomi.CONST[GLOBAL_CONFIG.appLocal.name].currencySymbol + Xiaomi.utils.formatPrice(el.price)).appendTo(directInfo), $('<i class="iconfont-arrowright-s-16"></i>').appendTo(directItem)
-                        })), str && (listContainer.append(str), $(".search-list a").not(".search-direct-item").each(function (i, ele) {
+                        })), str && (listbox-container.append(str), $(".search-list a").not(".search-direct-item").each(function (i, ele) {
                             var newHrefStr = $(ele).attr("href") + encodeURIComponent($(ele).text().replace(/[\-_'=+|\\\/]/g, " "));
                             $(ele).attr("href", newHrefStr)
                         }));
@@ -4855,7 +4855,7 @@
                             return '<span style="font-weight:800">' + $1 + "</span>"
                         };
                         ! function () {
-                            listContainer.find("a").each(function (i, ele) {
+                            listbox-container.find("a").each(function (i, ele) {
                                 var strEl;
                                 strEl = $(ele).hasClass("search-direct-item") ? $(ele).find(".item-info div") : $(ele);
                                 var str = strEl.text(),
@@ -4866,7 +4866,7 @@
                         }()
                     }
                 }
-            })) : (listContainer.addClass("hide"), listContainer.empty(), "" === searchVal && $(".search-recommend").removeClass("hide"))
+            })) : (listbox-container.addClass("hide"), listbox-container.empty(), "" === searchVal && $(".search-recommend").removeClass("hide"))
         }
         $(".J_foldingEntry").each(function () {
                 var timeout, $this = $(this),
@@ -4951,7 +4951,7 @@
                     0 == $(e.target).parents(".site-switch").length && shown && hideSitesList()
                 })
             }(), $("#J_submitEmail").on("click", function () {
-                var $J_emailContainer = $("#J_emailSubscribe"),
+                var $J_emailbox-container = $("#J_emailSubscribe"),
                     emailVal = $("#J_emailInput").val();
                 return Xiaomi.utils.checkEmail(emailVal) ? ($.ajax({
                     type: "GET",
@@ -4963,10 +4963,10 @@
                     dataType: "jsonp",
                     jsonp: "jsonpcallback",
                     success: function (data) {
-                        data && 0 == data.errno && $J_emailContainer.find(".sub-prompt").children().hide().filter(".success").show()
+                        data && 0 == data.errno && $J_emailbox-container.find(".sub-prompt").children().hide().filter(".success").show()
                     },
                     error: function () {}
-                }), !1) : ($J_emailContainer.find(".sub-prompt").children().hide().filter(".invalid").show(), !1)
+                }), !1) : ($J_emailbox-container.find(".sub-prompt").children().hide().filter(".invalid").show(), !1)
             }), $(".J_header_search").is(":visible") && $.ajax({
                 type: "GET",
                 url: GLOBAL_CONFIG.goUrl + "/recommend?from=pc",
@@ -4985,9 +4985,9 @@
                     }
                 }
             });
-        $(".search-section").on("click", ".J_header_search_true", function () {
+        $(".search-secao").on("click", ".J_header_search_true", function () {
             !searchDirect() && commonSearch()
-        }), $(".search-section").on("click", ".J_clearHis", function () {
+        }), $(".search-secao").on("click", ".J_clearHis", function () {
             var searchHistory = (Xiaomi.utils.getLocalStorage("searchHistory") || []).map(function (el) {
                 return el.replace(/script/gi, "#*script*#")
             });
@@ -5183,28 +5183,28 @@
 }, function (module, exports) {
     ! function ($) {
         function visibleWatcher(opt) {
-            function getCurrentSection() {
-                for (var index = -1, pos = $(document).scrollTop(), i = 0, len = sectionPosArr.length; i < len && pos + options.viewport.height() > sectionPosArr[i]; i += 1) index += 1;
+            function getCurrentsecao() {
+                for (var index = -1, pos = $(document).scrollTop(), i = 0, len = secaoPosArr.length; i < len && pos + options.viewport.height() > secaoPosArr[i]; i += 1) index += 1;
                 return index
             }
 
             function refresh() {
-                var viewIndex = getCurrentSection();
-                curIndex !== viewIndex && (curIndex = viewIndex, $sections.filter(function (i) {
+                var viewIndex = getCurrentsecao();
+                curIndex !== viewIndex && (curIndex = viewIndex, $secaos.filter(function (i) {
                     return i <= curIndex && !$(this).hasClass(options.visibleClass)
-                }).addClass(options.visibleClass).trigger("visible.visibleWatcher"), options.onVisible($sections.eq(curIndex), curIndex))
+                }).addClass(options.visibleClass).trigger("visible.visibleWatcher"), options.onVisible($secaos.eq(curIndex), curIndex))
             }
 
             function init() {
-                $sections.each(function () {
+                $secaos.each(function () {
                     var offsetValue = $(this).attr("data-offset") ? Number($(this).attr("data-offset")) : options.offset,
                         visibleOffset = offsetValue % 1 == 0 ? offsetValue : offsetValue * options.viewport.height();
-                    sectionPosArr.push($(this).offset().top + visibleOffset)
+                    secaoPosArr.push($(this).offset().top + visibleOffset)
                 }), refresh(), options.onLoad()
             }
-            var defaults, options, $sections = $(this),
+            var defaults, options, $secaos = $(this),
                 curIndex = -1,
-                sectionPosArr = [];
+                secaoPosArr = [];
             defaults = {
                 viewport: $(window),
                 visibleClass: "is-visible",
@@ -5222,11 +5222,11 @@
     }(jQuery)
 }, function (module, exports) {
     $(function () {
-        var $sectionBox = $(".J_section-box"),
+        var $secaoBox = $(".J_secao-box"),
             $navbarBox = $(".J_nav-bar-con"),
             navHeight = $(".J_nav-bar-con").height();
         $(window).on("scroll", function () {
-            $(window).scrollTop() >= $sectionBox.offset().top - navHeight ? $navbarBox.addClass("J_fixNavbar") : $navbarBox.removeClass("J_fixNavbar")
+            $(window).scrollTop() >= $secaoBox.offset().top - navHeight ? $navbarBox.addClass("J_fixNavbar") : $navbarBox.removeClass("J_fixNavbar")
         })
     })
 }, function (module, exports, __webpack_require__) {
